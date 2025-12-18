@@ -1,0 +1,32 @@
+product_id,product_name,category,supplier,stock_quantity,unit_cost,selling_price
+P001,Laptop Dell XPS,Electronics,Dell Inc,25,750.00,1099.99
+P002,iPhone 15 Pro,Electronics,Apple,45,899.00,1199.00
+P003,Samsung Galaxy S24,Electronics,Samsung,38,699.00,999.00
+P004,MacBook Pro 14,Electronics,Apple,15,1200.00,1999.00
+P005,Office Chair Pro,Furniture,IKEA,60,120.00,249.99
+P006,Standing Desk,Furniture,Autonomous,22,350.00,599.00
+P007,Monitor 32inch 4K,Electronics,LG,30,280.00,449.00
+P008,Wireless Keyboard,Electronics,Logitech,85,45.00,89.99
+P009,Gaming Mouse,Electronics,Razer,70,35.00,79.99
+P010,Webcam 4K,Electronics,Logitech,55,65.00,129.00
+P011,Desk Lamp LED,Furniture,Philips,90,18.00,45.99
+P012,Filing Cabinet,Furniture,Staples,8,95.00,189.00
+P013,Printer LaserJet,Electronics,HP,12,180.00,349.00
+P014,External SSD 1TB,Electronics,Samsung,48,75.00,149.99
+P015,USB-C Hub,Electronics,Anker,120,15.00,39.99
+P016,Noise Cancelling Headphones,Electronics,Sony,35,180.00,349.00
+P017,Tablet iPad Air,Electronics,Apple,28,450.00,749.00
+P018,Smart Watch,Electronics,Apple,42,250.00,449.00
+P019,Bookshelf Modern,Furniture,IKEA,18,85.00,179.00
+P020,Ergonomic Mousepad,Electronics,3M,150,8.00,24.99
+P021,Power Strip Smart,Electronics,TP-Link,75,22.00,49.99
+P022,Cable Management Kit,Furniture,Amazon,200,5.00,19.99
+P023,Monitor Arm,Furniture,Ergotron,40,65.00,149.00
+P024,Laptop Stand,Furniture,Rain Design,55,35.00,79.00
+P025,Wireless Charger,Electronics,Belkin,95,18.00,44.99
+P026,Bluetooth Speaker,Electronics,JBL,32,55.00,129.00
+P027,Conference Camera,Electronics,Logitech,5,350.00,699.00
+P028,Whiteboard 6ft,Furniture,Quartet,15,120.00,249.00
+P029,Desk Organizer Set,Furniture,Poppin,65,25.00,59.99
+P030,Air Purifier,Electronics,Dyson,20,280.00,549.00
+

@@ -1,0 +1,62 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.sqlite3
+*.log
+logs/
+.pytest_cache/
+.mypy_cache/
+env/
+.env
+env.local
+secrets.env
+/.idea/
+.vscode/
+.DS_Store
+docker-compose.override.yml
+*.egg-info/
+dist/
+build/
+postgres-db-volume/
+postgres-db-volume/*
+superset-data/
+superset-data/*
+/*.pem
+/.venv
+# Airflow
+logs/
+*.pyc
+__pycache__/
+*.pid
+
+# Data temporaire
+data/extracted_*.json
+data/transformed_*.json
+
+# Environment
+.env
+*.env.local
+
+# Docker
+.docker/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+*.egg-info/
+dist/
+build/
+venv/
+.venv/
+

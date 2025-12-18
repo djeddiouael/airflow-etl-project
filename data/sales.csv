@@ -1,0 +1,34 @@
+date,product,category,quantity,unit_price,region
+2024-01-15,Laptop Dell,Electronics,5,899.99,North
+2024-01-15,iPhone 15,Electronics,10,1199.00,South
+2024-01-16,Samsung TV,Electronics,3,799.00,East
+2024-01-16,Office Chair,Furniture,15,249.99,West
+2024-01-17,Standing Desk,Furniture,8,599.00,North
+2024-01-17,Wireless Mouse,Electronics,50,29.99,South
+2024-01-18,Keyboard Mechanical,Electronics,30,149.99,East
+2024-01-18,Monitor 27inch,Electronics,12,399.00,West
+2024-01-19,Webcam HD,Electronics,25,79.99,North
+2024-01-19,Headphones Sony,Electronics,20,299.00,South
+2024-01-20,Desk Lamp,Furniture,40,45.99,East
+2024-01-20,Filing Cabinet,Furniture,6,189.00,West
+2024-01-21,Printer HP,Electronics,4,299.99,North
+2024-01-21,Scanner Canon,Electronics,3,199.00,South
+2024-01-22,USB Hub,Electronics,60,24.99,East
+2024-01-22,Cable HDMI,Electronics,100,12.99,West
+2024-01-23,Tablet iPad,Electronics,7,649.00,North
+2024-01-23,Smart Watch,Electronics,15,399.00,South
+2024-01-24,External SSD,Electronics,22,129.99,East
+2024-01-24,Power Bank,Electronics,35,49.99,West
+2024-01-25,Bookshelf,Furniture,10,159.00,North
+2024-01-25,Office Desk,Furniture,5,449.00,South
+2024-01-26,Ergonomic Mouse,Electronics,28,89.99,East
+2024-01-26,Laptop Stand,Furniture,18,79.00,West
+2024-01-27,Wireless Charger,Electronics,45,39.99,North
+2024-01-27,Phone Case,Electronics,80,19.99,South
+2024-01-28,Screen Protector,Electronics,120,9.99,East
+2024-01-28,Bluetooth Speaker,Electronics,16,149.00,West
+2024-01-29,Gaming Mouse,Electronics,14,69.99,North
+2024-01-29,Mousepad XL,Electronics,55,24.99,South
+2024-01-30,Webcam Ring Light,Electronics,20,34.99,East
+2024-01-30,Desk Organizer,Furniture,30,29.99,West
+
