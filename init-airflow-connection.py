@@ -9,8 +9,8 @@ import sys
 
 from airflow.models import Connection
 from airflow.utils.db import merge_conn
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+# from sqlalchemy import create_engine
+# from sqlalchemy.orm import sessionmaker
 
 # Connection details
 POSTGRES_HOST = os.environ.get("POSTGRES_HOST", "postgres")
