@@ -1,4 +1,3 @@
-```python
 #!/usr/bin/env python3
 """
 Script pour configurer Superset avec des charts et un dashboard
