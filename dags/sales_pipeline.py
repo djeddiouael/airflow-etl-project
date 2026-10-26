@@ -156,22 +156,23 @@ def calculate_kpis(**kwargs):
         "top_region": top_region,
     }
 
-    kpi_df = pd.DataFrame([kpi_data])
+  
+kpi_df = pd.DataFrame([kpi_data])
 
-    # Connexion à PostgreSQL
-    hook = PostgresHook(postgres_conn_id="postgres_etl")
-    engine = hook.get_sqlalchemy_engine()
+# Connexion à PostgreSQL
+hook = PostgresHook(postgres_conn_id="postgres_etl")
+engine = hook.get_sqlalchemy_engine()
 
-    kpi_df.to_sql(
-        "sales_kpis", engine, schema="public", if_exists="append", index=False
-    )
+kpi_df.to_sql(
+    "sales_kpis", engine, schema="public", if_exists="append", index=False
+)
 
-    print(f"✅ KPIs calculés et sauvegardés:")
-    print(f"   - Total Sales: {total_sales:.2f}")
-    print(f"   - Total Quantity: {total_quantity}")
-    print(f"   - Avg Order Value: {avg_order_value:.2f}")
-    print(f"   - Top Product: {top_product}")
-    print(f"   - Top Region: {top_region}")
+print("✅ KPIs calculés et sauvegardés:")
+print(f"   - Total Sales: {total_sales:.2f}")
+print(f"   - Total Quantity: {total_quantity}")
+print(f"   - Avg Order Value: {avg_order_value:.2f}")
+print(f"   - Top Product: {top_product}")
+print(f"   - Top Region: {top_region}")
 
     return True
 
