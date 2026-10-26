@@ -1,3 +1,4 @@
+```python
 #!/usr/bin/env python3
 """
 Script pour configurer Superset avec des charts et un dashboard
@@ -21,9 +22,10 @@ headers = {
 
 
 def get_csrf_token():
-    """Obtenir le token CSRF pour les requêtes POST"""
+    """Obtenir le token CSRF pour les requêtes POST."""
     response = requests.get(
-        f"{SUPERSET_URL}/api/v1/security/login", auth=(ADMIN_USER, ADMIN_PASSWORD)
+        f"{SUPERSET_URL}/api/v1/security/login",
+        auth=(ADMIN_USER, ADMIN_PASSWORD),
     )
     if response.status_code == 200:
         return response.json().get("result", {}).get("access_token")
@@ -31,13 +33,20 @@ def get_csrf_token():
 
 
 def login():
-    """Se connecter à Superset"""
+    """Se connecter à Superset."""
     session = requests.Session()
     session.auth = (ADMIN_USER, ADMIN_PASSWORD)
 
     # Authentification
-    login_data = {"username": ADMIN_USER, "password": ADMIN_PASSWORD, "provider": "db"}
-    response = session.post(f"{SUPERSET_URL}/api/v1/security/login", json=login_data)
+    login_data = {
+        "username": ADMIN_USER,
+        "password": ADMIN_PASSWORD,
+        "provider": "db",
+    }
+    response = session.post(
+        f"{SUPERSET_URL}/api/v1/security/login",
+        json=login_data,
+    )
 
     if response.status_code == 200:
         token = response.json().get("access_token")
@@ -47,17 +56,22 @@ def login():
 
 
 def add_postgres_database(session):
-    """Ajouter la connexion PostgreSQL à Superset"""
+    """Ajouter la connexion PostgreSQL à Superset."""
     print("🔧 Ajout de la connexion PostgreSQL...")
 
     db_config = {
         "database_name": "etl_data",
-        "sqlalchemy_uri": "postgresql://airflow:airflow@postgres:5432/etl_data",
+        "sqlalchemy_uri": (
+            "postgresql://airflow:airflow@postgres:5432/etl_data"
+        ),
         "cache_timeout": 3600,
         "expose_in_sqllab": True,
     }
 
-    response = session.post(f"{SUPERSET_URL}/api/v1/databases", json=db_config)
+    response = session.post(
+        f"{SUPERSET_URL}/api/v1/databases",
+        json=db_config,
+    )
 
     if response.status_code in [200, 201]:
         db_id = response.json().get("id")
@@ -72,12 +86,15 @@ def add_postgres_database(session):
                 if db.get("database_name") == "etl_data":
                     return db.get("id")
 
-    print(f"❌ Erreur lors de la création: {response.status_code} - {response.text}")
+    print(
+        f"❌ Erreur lors de la création: "
+        f"{response.status_code} - {response.text}"
+    )
     return None
 
 
 def create_dataset(session, db_id, table_name):
-    """Créer un dataset basé sur une table PostgreSQL"""
+    """Créer un dataset basé sur une table PostgreSQL."""
     print(f"📊 Création du dataset pour {table_name}...")
 
     dataset_config = {
@@ -86,7 +103,10 @@ def create_dataset(session, db_id, table_name):
         "schema": "public",
     }
 
-    response = session.post(f"{SUPERSET_URL}/api/v1/datasets", json=dataset_config)
+    response = session.post(
+        f"{SUPERSET_URL}/api/v1/datasets",
+        json=dataset_config,
+    )
 
     if response.status_code in [200, 201]:
         dataset_id = response.json().get("id")
@@ -106,14 +126,20 @@ def create_dataset(session, db_id, table_name):
 
 
 def create_chart(session, dataset_id, chart_config):
-    """Créer un chart"""
+    """Créer un chart."""
     print(f"📈 Création du chart: {chart_config['slice_name']}...")
 
-    response = session.post(f"{SUPERSET_URL}/api/v1/charts", json=chart_config)
+    response = session.post(
+        f"{SUPERSET_URL}/api/v1/charts",
+        json=chart_config,
+    )
 
     if response.status_code in [200, 201]:
         chart_id = response.json().get("id")
-        print(f"✅ Chart créé: {chart_config['slice_name']} (ID: {chart_id})")
+        print(
+            f"✅ Chart créé: "
+            f"{chart_config['slice_name']} (ID: {chart_id})"
+        )
         return chart_id
     else:
         print(f"❌ Erreur: {response.status_code} - {response.text}")
@@ -121,10 +147,16 @@ def create_chart(session, dataset_id, chart_config):
 
 
 def create_dashboard(session, dashboard_config):
-    """Créer un dashboard"""
-    print(f"🎨 Création du dashboard: {dashboard_config['dashboard_title']}...")
+    """Créer un dashboard."""
+    print(
+        f"🎨 Création du dashboard: "
+        f"{dashboard_config['dashboard_title']}..."
+    )
 
-    response = session.post(f"{SUPERSET_URL}/api/v1/dashboards", json=dashboard_config)
+    response = session.post(
+        f"{SUPERSET_URL}/api/v1/dashboards",
+        json=dashboard_config,
+    )
 
     if response.status_code in [200, 201]:
         dashboard_id = response.json().get("id")
@@ -136,7 +168,7 @@ def create_dashboard(session, dashboard_config):
 
 
 def main():
-    """Fonction principale"""
+    """Fonction principale."""
     print("🚀 Configuration de Superset avec Airflow ETL\n")
 
     # Se connecter
@@ -154,8 +186,10 @@ def main():
     print("\n" + "=" * 60)
 
     # Créer les datasets
-    sales_dataset_id = create_dataset(session, db_id, "sales_transformed")
-    kpis_dataset_id = create_dataset(session, db_id, "sales_kpis")
+    sales_dataset_id = create_dataset(
+        session, db_id, "sales_transformed"
+    )
+    create_dataset(session, db_id, "sales_kpis")
 
     print("\n" + "=" * 60)
 
@@ -228,7 +262,9 @@ def main():
 
     chart_ids = []
     for chart_config in charts:
-        chart_id = create_chart(session, sales_dataset_id, chart_config)
+        chart_id = create_chart(
+            session, sales_dataset_id, chart_config
+        )
         if chart_id:
             chart_ids.append(chart_id)
 
@@ -245,10 +281,11 @@ def main():
 
     print("\n" + "=" * 60)
     print("\n✅ Configuration terminée!")
-    print(f"\n📊 Accédez au dashboard:")
+    print("\n📊 Accédez au dashboard:")
     print(f"   http://localhost:8088/dashboard/{dashboard_id}/")
-    print(f"\n👤 Identifiants: admin / admin")
+    print("\n👤 Identifiants: admin / admin")
 
 
 if __name__ == "__main__":
     main()
+```
