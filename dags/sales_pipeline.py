@@ -125,7 +125,6 @@ def load_data(**kwargs):
     return True
 
 
-
 def calculate_kpis(**kwargs):
     """
     Calculer les KPIs et les stocker dans la table sales_kpis
@@ -178,6 +177,7 @@ def calculate_kpis(**kwargs):
     print(f"   - Top Region: {top_region}")
 
     return True
+
 
 # Définition du DAG
 with DAG(
