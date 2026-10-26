@@ -125,6 +125,7 @@ def load_data(**kwargs):
     return True
 
 
+
 def calculate_kpis(**kwargs):
     """
     Calculer les KPIs et les stocker dans la table sales_kpis
@@ -132,7 +133,7 @@ def calculate_kpis(**kwargs):
     json_file = os.path.join(DATA_PATH, "transformed_data.json")
     df = pd.read_json(json_file)
 
-    if len(df) == 0:
+    if df.empty:
         print("⚠️  Aucune donnée pour calculer les KPIs")
         return True
 
@@ -140,12 +141,8 @@ def calculate_kpis(**kwargs):
     total_sales = float(df["total_amount"].sum())
     total_quantity = int(df["quantity"].sum())
     avg_order_value = float(df["total_amount"].mean())
-    top_product = (
-        df.groupby("product")["total_amount"].sum().idxmax() if len(df) > 0 else "N/A"
-    )
-    top_region = (
-        df.groupby("region")["total_amount"].sum().idxmax() if len(df) > 0 else "N/A"
-    )
+    top_product = df.groupby("product")["total_amount"].sum().idxmax()
+    top_region = df.groupby("region")["total_amount"].sum().idxmax()
 
     kpi_data = {
         "calculation_date": datetime.now().date(),
@@ -156,26 +153,31 @@ def calculate_kpis(**kwargs):
         "top_region": top_region,
     }
 
-  
-kpi_df = pd.DataFrame([kpi_data])
+    kpi_df = pd.DataFrame([kpi_data])
 
-# Connexion à PostgreSQL
-hook = PostgresHook(postgres_conn_id="postgres_etl")
-engine = hook.get_sqlalchemy_engine()
+    # Connexion à PostgreSQL
+    hook = PostgresHook(postgres_conn_id="postgres_etl")
+    engine = hook.get_sqlalchemy_engine()
 
-kpi_df.to_sql(
-    "sales_kpis", engine, schema="public", if_exists="append", index=False
-)
+    try:
+        kpi_df.to_sql(
+            "sales_kpis",
+            engine,
+            schema="public",
+            if_exists="append",
+            index=False,
+        )
+    finally:
+        engine.dispose()
 
-print("✅ KPIs calculés et sauvegardés:")
-print(f"   - Total Sales: {total_sales:.2f}")
-print(f"   - Total Quantity: {total_quantity}")
-print(f"   - Avg Order Value: {avg_order_value:.2f}")
-print(f"   - Top Product: {top_product}")
-print(f"   - Top Region: {top_region}")
+    print("✅ KPIs calculés et sauvegardés:")
+    print(f"   - Total Sales: {total_sales:.2f}")
+    print(f"   - Total Quantity: {total_quantity}")
+    print(f"   - Avg Order Value: {avg_order_value:.2f}")
+    print(f"   - Top Product: {top_product}")
+    print(f"   - Top Region: {top_region}")
 
     return True
-
 
 # Définition du DAG
 with DAG(
