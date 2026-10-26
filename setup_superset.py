@@ -60,9 +60,7 @@ def add_postgres_database(session):
 
     db_config = {
         "database_name": "etl_data",
-        "sqlalchemy_uri": (
-            "postgresql://airflow:airflow@postgres:5432/etl_data"
-        ),
+        "sqlalchemy_uri": ("postgresql://airflow:airflow@postgres:5432/etl_data"),
         "cache_timeout": 3600,
         "expose_in_sqllab": True,
     }
@@ -85,10 +83,7 @@ def add_postgres_database(session):
                 if db.get("database_name") == "etl_data":
                     return db.get("id")
 
-    print(
-        f"❌ Erreur lors de la création: "
-        f"{response.status_code} - {response.text}"
-    )
+    print(f"❌ Erreur lors de la création: " f"{response.status_code} - {response.text}")
     return None
 
 
@@ -135,10 +130,7 @@ def create_chart(session, dataset_id, chart_config):
 
     if response.status_code in [200, 201]:
         chart_id = response.json().get("id")
-        print(
-            f"✅ Chart créé: "
-            f"{chart_config['slice_name']} (ID: {chart_id})"
-        )
+        print(f"✅ Chart créé: " f"{chart_config['slice_name']} (ID: {chart_id})")
         return chart_id
     else:
         print(f"❌ Erreur: {response.status_code} - {response.text}")
@@ -147,10 +139,7 @@ def create_chart(session, dataset_id, chart_config):
 
 def create_dashboard(session, dashboard_config):
     """Créer un dashboard."""
-    print(
-        f"🎨 Création du dashboard: "
-        f"{dashboard_config['dashboard_title']}..."
-    )
+    print(f"🎨 Création du dashboard: " f"{dashboard_config['dashboard_title']}...")
 
     response = session.post(
         f"{SUPERSET_URL}/api/v1/dashboards",
@@ -185,9 +174,7 @@ def main():
     print("\n" + "=" * 60)
 
     # Créer les datasets
-    sales_dataset_id = create_dataset(
-        session, db_id, "sales_transformed"
-    )
+    sales_dataset_id = create_dataset(session, db_id, "sales_transformed")
     create_dataset(session, db_id, "sales_kpis")
 
     print("\n" + "=" * 60)
@@ -261,9 +248,7 @@ def main():
 
     chart_ids = []
     for chart_config in charts:
-        chart_id = create_chart(
-            session, sales_dataset_id, chart_config
-        )
+        chart_id = create_chart(session, sales_dataset_id, chart_config)
         if chart_id:
             chart_ids.append(chart_id)
 
