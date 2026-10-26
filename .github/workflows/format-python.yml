@@ -1,0 +1,44 @@
+
+name: Format Python
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install Black
+        run: pip install black==23.1.0
+
+      - name: Format Python files
+        run: |
+          black init-airflow-connection.py
+          black superset/superset_config.py
+          black dags/products_pipeline.py
+          black dags/sales_pipeline.py
+          black setup_superset.py
+
+      - name: Commit formatting changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add init-airflow-connection.py superset/superset_config.py dags/products_pipeline.py dags/sales_pipeline.py setup_superset.py
+            git commit -m "Format Python files with Black"
+            git push
+          else
+            echo "No formatting changes needed"
+          fi
