@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """
 Script pour configurer Superset avec des charts et un dashboard.
@@ -54,10 +53,7 @@ def login():
         session.headers.update({"Authorization": f"Bearer {token}"})
         return session
 
-    print(
-        f"❌ Échec de connexion : "
-        f"{response.status_code} - {response.text}"
-    )
+    print(f"❌ Échec de connexion : " f"{response.status_code} - {response.text}")
     return None
 
 
@@ -67,9 +63,7 @@ def add_postgres_database(session):
 
     db_config = {
         "database_name": "etl_data",
-        "sqlalchemy_uri": (
-            "postgresql://airflow:airflow@postgres:5432/etl_data"
-        ),
+        "sqlalchemy_uri": ("postgresql://airflow:airflow@postgres:5432/etl_data"),
         "cache_timeout": 3600,
         "expose_in_sqllab": True,
     }
@@ -98,8 +92,7 @@ def add_postgres_database(session):
                     return db.get("id")
 
     print(
-        f"❌ Erreur lors de la création : "
-        f"{response.status_code} - {response.text}"
+        f"❌ Erreur lors de la création : " f"{response.status_code} - {response.text}"
     )
     return None
 
@@ -122,10 +115,7 @@ def create_dataset(session, db_id, table_name):
 
     if response.status_code in (200, 201):
         dataset_id = response.json().get("id")
-        print(
-            f"✅ Dataset créé : {table_name} "
-            f"(ID : {dataset_id})"
-        )
+        print(f"✅ Dataset créé : {table_name} " f"(ID : {dataset_id})")
         return dataset_id
 
     if response.status_code == 422:
@@ -143,10 +133,7 @@ def create_dataset(session, db_id, table_name):
                 ):
                     return dataset.get("id")
 
-    print(
-        f"❌ Erreur : {response.status_code} - "
-        f"{response.text}"
-    )
+    print(f"❌ Erreur : {response.status_code} - " f"{response.text}")
     return None
 
 
@@ -154,10 +141,7 @@ def create_chart(session, dataset_id, chart_config):
     """Créer un chart."""
     chart_config["datasource_id"] = dataset_id
 
-    print(
-        f"📈 Création du chart : "
-        f"{chart_config['slice_name']}..."
-    )
+    print(f"📈 Création du chart : " f"{chart_config['slice_name']}...")
 
     response = session.post(
         f"{SUPERSET_URL}/api/v1/chart/",
@@ -167,25 +151,16 @@ def create_chart(session, dataset_id, chart_config):
 
     if response.status_code in (200, 201):
         chart_id = response.json().get("id")
-        print(
-            f"✅ Chart créé : {chart_config['slice_name']} "
-            f"(ID : {chart_id})"
-        )
+        print(f"✅ Chart créé : {chart_config['slice_name']} " f"(ID : {chart_id})")
         return chart_id
 
-    print(
-        f"❌ Erreur : {response.status_code} - "
-        f"{response.text}"
-    )
+    print(f"❌ Erreur : {response.status_code} - " f"{response.text}")
     return None
 
 
 def create_dashboard(session, dashboard_config):
     """Créer un dashboard."""
-    print(
-        f"🎨 Création du dashboard : "
-        f"{dashboard_config['dashboard_title']}..."
-    )
+    print(f"🎨 Création du dashboard : " f"{dashboard_config['dashboard_title']}...")
 
     response = session.post(
         f"{SUPERSET_URL}/api/v1/dashboard/",
@@ -198,10 +173,7 @@ def create_dashboard(session, dashboard_config):
         print(f"✅ Dashboard créé (ID : {dashboard_id})")
         return dashboard_id
 
-    print(
-        f"❌ Erreur : {response.status_code} - "
-        f"{response.text}"
-    )
+    print(f"❌ Erreur : {response.status_code} - " f"{response.text}")
     return None
 
 
@@ -221,9 +193,7 @@ def main():
 
     print("\n" + "=" * 60)
 
-    sales_dataset_id = create_dataset(
-        session, db_id, "sales_transformed"
-    )
+    sales_dataset_id = create_dataset(session, db_id, "sales_transformed")
     create_dataset(session, db_id, "sales_kpis")
 
     if not sales_dataset_id:
@@ -247,9 +217,7 @@ def main():
                     "groupby": ["region"],
                     "metric": {
                         "expressionType": "SIMPLE",
-                        "column": {
-                            "column_name": "total_amount"
-                        },
+                        "column": {"column_name": "total_amount"},
                         "aggregate": "SUM",
                         "label": "Total Sales",
                     },
@@ -269,9 +237,7 @@ def main():
                     "groupby": ["product"],
                     "metric": {
                         "expressionType": "SIMPLE",
-                        "column": {
-                            "column_name": "total_amount"
-                        },
+                        "column": {"column_name": "total_amount"},
                         "aggregate": "SUM",
                         "label": "Total Sales",
                     },
@@ -341,9 +307,7 @@ def main():
     if dashboard_id:
         print("\n✅ Configuration terminée !")
         print("\n📊 Accédez au dashboard :")
-        print(
-            f"{SUPERSET_URL}/dashboard/{dashboard_id}/"
-        )
+        print(f"{SUPERSET_URL}/dashboard/{dashboard_id}/")
         print(f"\n📈 Nombre de charts créés : {len(chart_ids)}")
     else:
         print("⚠️ Le dashboard n'a pas pu être créé.")
