@@ -1,15 +1,10 @@
-```yaml
 name: CI
 
 'on':
   push:
-    branches:
-      - main
-      - master
+    branches: [main, master]
   pull_request:
-    branches:
-      - main
-      - master
+    branches: [main, master]
   workflow_dispatch:
 
 permissions:
@@ -42,4 +37,3 @@ jobs:
 
       - name: Run flake8
         run: flake8 . --max-line-length=120
-```
