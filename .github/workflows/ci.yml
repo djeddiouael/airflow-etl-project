@@ -1,31 +1,36 @@
+
 name: CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
+  workflow_dispatch:
 
 jobs:
   lint:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.10"
+
       - name: Install linters
         run: |
           python -m pip install --upgrade pip
           pip install black==23.1.0 flake8==6.0.0 isort==5.12.0
-      - name: Run black check
-        run: |
-          black --check .
-      - name: Run isort check
-        run: |
-          isort --check-only .
+
+      - name: Check formatting with Black
+        run: black --check .
+
+      - name: Check imports with isort
+        run: isort --check-only .
+
       - name: Run flake8
-        run: |
-          flake8 . --max-line-length=120 || true
-# Trigger a fresh CI run to inspect lint checks
+        run: flake8 . --max-line-length=120
