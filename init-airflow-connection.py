@@ -6,6 +6,7 @@ This script should be run after Airflow is initialized.
 
 import os
 import sys
+
 from airflow.models import Connection
 from airflow.utils.db import merge_conn
 from sqlalchemy import create_engine

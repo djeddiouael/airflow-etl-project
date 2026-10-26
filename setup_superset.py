@@ -4,9 +4,10 @@ Script pour configurer Superset avec des charts et un dashboard
 Crée une connexion PostgreSQL, des datasets et des visualisations
 """
 
-import requests
 import json
 import time
+
+import requests
 
 # Configuration
 SUPERSET_URL = "http://localhost:8088"

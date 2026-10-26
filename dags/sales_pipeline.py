@@ -3,12 +3,13 @@ DAG ETL Pipeline pour les données de ventes
 Extract -> Transform -> Load
 """
 
+import os
 from datetime import datetime, timedelta
+
+import pandas as pd
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
-import pandas as pd
-import os
 
 # Configuration par défaut du DAG
 default_args = {

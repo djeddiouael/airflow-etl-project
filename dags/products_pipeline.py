@@ -2,12 +2,13 @@
 DAG ETL Pipeline pour les données de produits et inventaire
 """
 
+import os
 from datetime import datetime, timedelta
+
+import pandas as pd
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
-import pandas as pd
-import os
 
 default_args = {
     "owner": "airflow",
